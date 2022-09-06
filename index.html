@@ -7,7 +7,40 @@
     <title>Quiz on Coding</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
+
+    <header>
+        <h1 id="highscore">High Scores</h1>
+        <h1 class="time">Time : </h1>
+    </header>
+
+    <main id="starter" class="show">
+        <div class="begin">
+            <h1>Coding Quiz</h1>
+            <p>Answer the questions presented within the given time limit. If the answer is correct 5 points will be gained. On the other hand if incorrect you will lose 2 seconds of the given time.</p>
+            <button class="button" id="start">Begin Quiz</button>
+        </div>
+    </main>
+
+    <div id="questionholder" class="hide">
+        <div class="questions">
+            <div id="question"></div>
+            <div id="answerbtn" class="chart"></div>
+        </div>
+    </div>
+
+    <div id="endholder" class="hide">
+        <div class="end">
+        <div id="score">
+            <h2>Finished</h2>
+        </div>
+        <div id="initialssheet" class="initials">
+            <p>Enter Initials : </p>
+        </div>
+    </div>
+
+
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
