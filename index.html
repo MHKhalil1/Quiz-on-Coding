@@ -35,9 +35,29 @@
         <div id="score">
             <h2>Finished</h2>
         </div>
-        <div id="initialssheet" class="initials">
-            <p>Enter Initials : </p>
+        <form id="initialssheet" class="initials">
+            <p>Enter Initials : 
+                <input type="text" name="initials" id="initials" class="text"/>
+                <button class="button" id="submits" type="submit">Submit</button>
+            </p>
+        </form>
         </div>
+    </div>
+
+    <div id="highscore" class="hide">
+        <div class="high-score">
+            <h3 class="hiscore">Highscores</h3>
+            <ol id="highscores" class="list"></ol>
+        </div>
+            <button class="click" id="back">Back</button>
+            <button class="click" id="clearscores">Clear Scores</button>
+    </div>
+
+    <div class="hide" id="correct">
+        <h4>Correct Answer!</h4>
+    </div>
+    <div class="hide" id="incorrect">
+        <h4>Incorrect Answer!</h4>
     </div>
 
 
