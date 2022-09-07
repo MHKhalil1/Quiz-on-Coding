@@ -17,7 +17,6 @@ var incorrectEl = document.getElementById("incorrect")
 var timeleft;
 var score = 0
 var Highscore = [];
-timeEl.innerText = 0;
 
 var questions = [
     { question: "What does HTML stand for?",
@@ -40,4 +39,40 @@ var questions = [
       answer: "4. Both A and B",
       choices: [{choice: "1. var"}, {choice: "2. let "}, {choice: "3. for"}, {choice: "4. Both A and B"}]     
     },
-]
+];
+
+var renderBeginPage = function () {
+    highscore1El.classList.add("hide")
+    highscore1El.classList.remove("show")
+    beginEl.classList.remove("hide")
+    beginEl.classList.add("show")
+    scoreEl.removeChild(scoreEl.lastChild)
+    timeEl.textContent = 0
+    score = 0
+    QuestionCatalog = 0
+    gameover = ""
+
+    if (correctEl.className = "show") {
+        correctEl.classList.remove("show");
+        correctEl.classList.add("hide")
+    }
+    if (incorrectEl.className = "show") {
+        incorrectEl.classList.remove("show");
+        incorrectEl.classList.add("hide")
+    }
+}
+
+var setTime = function () {
+    timeleft = 20;
+}
+
+var startGame = function() {
+    console.log("Hello")
+    starterEl.classList.add("hide");
+    starterEl.classList.remove("show");
+    questionEl.classList.remove("hide");
+    questionEl.classList.add("show");
+    setTime()
+}
+
+startbtnEl.addEventListener("click", startGame)
