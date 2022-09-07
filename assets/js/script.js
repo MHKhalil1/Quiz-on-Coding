@@ -1,0 +1,20 @@
+var highscoreEl = document.getElementById("highscore")
+var timeEl = document.querySelector("#timer")
+var starterEl = document.getElementById("starter")
+var startbtnEl = document.querySelector("#start")
+var questionholderEl = document.getElementById("questionholder")
+var questionEl = document.getElementById("question")
+var answerbtnEl = document.getElementById("answerbtn")
+var endholderEl = document.getElementById("endholder")
+var scoreEl = document.getElementById("score")
+var initialssheetEl = document.getElementById("initialssheet")
+var highscore1El = document.getElementById("highscore1")
+var highscoresEl = document.getElementById("highscores")
+var backbtnEl = document.querySelector("#back")
+var clearscoresbtnEl = document.querySelector("#clearscores")
+var correctEl = document.getElementById("correct")
+var incorrectEl = document.getElementById("incorrect")
+var timeleft;
+var score = 0
+var Highscore = [];
+timeEl.innerText = 0;
