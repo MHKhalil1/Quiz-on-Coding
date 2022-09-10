@@ -1,3 +1,13 @@
-.hide {
+  .show {
+    display: flex;
+  }
+
+  .hide {
     display: none;
-}
+  }
+
+  .chart {
+    display: grid;
+  }
+
+  

@@ -12,11 +12,11 @@ var highscore1El = document.getElementById("highscore1")
 var highscoresEl = document.getElementById("highscores")
 var backbtnEl = document.querySelector("#back")
 var clearscoresbtnEl = document.querySelector("#clearscores")
-var correctEl = document.getElementById("correct")
-var incorrectEl = document.getElementById("incorrect")
 var timeleft;
 var score = 0
 var Highscore = [];
+var QuestionCatalog = 0
+var arrayShuffledQuestions
 
 var questions = [
     { question: "What does HTML stand for?",
@@ -41,38 +41,53 @@ var questions = [
     },
 ];
 
-var renderBeginPage = function () {
-    highscore1El.classList.add("hide")
-    highscore1El.classList.remove("show")
-    beginEl.classList.remove("hide")
-    beginEl.classList.add("show")
-    scoreEl.removeChild(scoreEl.lastChild)
-    timeEl.textContent = 0
-    score = 0
-    QuestionCatalog = 0
-    gameover = ""
+var beginQuiz = function() {
+  starterEl.classList.add("hide");
+  starterEl.classList.remove("show");
+  questionholderEl.classList.remove("hide");
+  questionholderEl.classList.add("show");
+  arrayShuffledQuestions = questions.sort(() => Math.random() - 0.5)
+  setTime()
+  setQuestion()
+}
 
-    if (correctEl.className = "show") {
-        correctEl.classList.remove("show");
-        correctEl.classList.add("hide")
+var setQuestion = function() {
+  resetAnswers()
+  displayQuestion(arrayShuffledQuestions[QuestionCatalog])
+}
+
+var showQuestion = function(_index) {
+  questionEl.innerText = _index.q
+  for (var i = 0; i < _index.choices.length; i++) {
+    var answerbtn = document.createElement("button")
+    answerbtn.innerText = _index.choices[i].choice
+    answerbtn.classList.add("button")
+    answerbtn.classList.add("ansbtn")
+    answerbtn.addEventListener("click", answerVerification)
+    answerbtnEl.appendChild(answerbtn)
+  }
+};
+
+var answerVerification = function(_event) {
+  var selectedanswer = _event.target
+  if (arrayShuffledQuestions[QuestionCatalog].a === selectedanswer.innerText){
+    answerCorrect()
+    score = score + 5
+  }
+
+  else {
+    answerWrong()
+    timeleft = timeleft - 2;
+  };
+
+  QuestionCatalog++
+    if (arrayShuffledQuestions.length > QuestionCatalog + 1) {
+      setQuestion()
     }
-    if (incorrectEl.className = "show") {
-        incorrectEl.classList.remove("show");
-        incorrectEl.classList.add("hide")
+    else {
+      gameover = "true";
+      showScore();
     }
-}
 
-var setTime = function () {
-    timeleft = 20;
 }
-
-var startGame = function() {
-    console.log("Hello")
-    starterEl.classList.add("hide");
-    starterEl.classList.remove("show");
-    questionEl.classList.remove("hide");
-    questionEl.classList.add("show");
-    setTime()
-}
-
-startbtnEl.addEventListener("click", startGame)
+startbtnEl.addEventListener("click", beginQuiz)
