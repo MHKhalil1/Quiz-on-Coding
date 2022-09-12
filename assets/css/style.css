@@ -1,4 +1,18 @@
-  .show {
+body {
+  background-color: grey;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+
+p {
+  font-size: x-large;
+}
+
+.show {
     display: flex;
   }
 
