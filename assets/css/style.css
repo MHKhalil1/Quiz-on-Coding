@@ -11,7 +11,7 @@ header {
 p {
   font-size: x-large;
 }
-
+/* allows certain text and buttons to appear and disapear */
 .show {
     display: flex;
   }
