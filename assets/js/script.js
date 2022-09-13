@@ -1,6 +1,6 @@
 // Variables
 var highscoreEl = document.getElementById("highscore")
-var timeEl = document.querySelector("#timer")
+var timeEl = document.querySelector("#time")
 var starterEl = document.getElementById("starter")
 var startbtnEl = document.querySelector("#start")
 var questionholderEl = document.getElementById("questionholder")
@@ -51,11 +51,26 @@ var beginQuiz = function() {
   putQuestion()
   placeTime()
 }
+
+// This function both reveals the questions as well as contains the answer button.
+var revealQuestion = function(index) {
+  questionEl.innerText = index.question
+  for (var i = 0; i < index.choices.length; i++) {
+    var answerbtn2 = document.createElement("button")
+    answerbtn2.innerText = index.choices[i].choice
+    answerbtn2.classList.add("button")
+    answerbtn2.classList.add("answerbtn")
+    answerbtn2.addEventListener("click", answerConfirm)
+    answerbtnEl.appendChild(answerbtn2)
+  }
+};
+
 // This function will display the questions in a randomized order by pulling it from the catalog
 var putQuestion = function() {
-  ereseAnswer()
-  revealQuestion(arrayShuffledQuestions[QuestionCatalog])
+ereseAnswer()
+revealQuestion(arrayShuffledQuestions[QuestionCatalog])
 }
+
 // This function allows the webpage to understand when the quiz is over or not
 var placeTime = function () {
   timeleft = 20;
@@ -74,7 +89,7 @@ var timecheck = setInterval(function() {
     clearInterval(timecheck)
   }
 
-}, 800)
+}, 1000)
 }
 
 var ereseAnswer = function() {
@@ -82,31 +97,28 @@ var ereseAnswer = function() {
     answerbtnEl.removeChild(answerbtnEl.firstChild)
   };
 };
+// Allows the questions to be answered
+var correctAnswer = function() {
+
+}
+// Allows the questions to be answered
+var incorrectAnswer = function() {
+
+}
+
 // This function should confirm whether the answer is correct or not.
 var answerConfirm = function(event) {
   var pickedanswer = event.target
   if (arrayShuffledQuestions[QuestionCatalog].a === pickedanswer.innerText){
-    answerCorrect()
+    correctAnswer();
     score = score + 5
   }
-
   else {
-    answerIncorrect()
+    incorrectAnswer()
     timeleft = timeleft - 2;
   };
-  
-  var revealQuestion = function(index) {
-    questionEl.innerText = index.question
-    for (var i = 0; i < index.choices.length; i++) {
-      var answerbtn2 = document.createElement("button")
-      answerbtn2.innerText = index.choices[i].choice
-      answerbtn2.classList.add("button")
-      answerbtn2.classList.add("answerbtn")
-      answerbtn2.addEventListener("click", answerConfirm)
-      answerbtnEl.appendChild(answerbtn2)
-    }
-  };
 
+// This is a simple input to allow the quiz to go on if there is remaining questions.
   QuestionCatalog++
   if (arrayShuffledQuestions.length > QuestionCatalog + 1) {
     putQuestion()
@@ -116,3 +128,118 @@ var answerConfirm = function(event) {
     showScore();
   }
 }
+// This function will return the user to the beginning of the webpage
+var displayBeginningPage = function () {
+  highscore1El.classList.add("hide")
+  highscore1El.classList.remove("show")
+  starterEl.classList.remove("show")
+  starterEl.classList.add("show")
+  scoreEl.classList.removeChild(scoreEl.lastChild)
+  QuestionCatalog = 0
+  gameover = ""
+  timeEl.textContent = 0
+  score = 0
+}
+// This should reveal your score when the quiz is completed
+var showScore = function() {
+  questionholderEl.classList.add("hide");
+  endholderEl.classList.remove("hide");
+  endholderEl.classList.add("show");
+
+  var scorePresented = document.createElement("p");
+  scorePresented.innerText = ("You Scored " + score);
+  scoreEl.appendChild(scorePresented);
+}
+
+var makeScores = function(event) {
+  event.preventDefault()
+  var initials = document.querySelector("#initials").value;
+  if (!initials) {
+    alert("Initials");
+    return;
+  }
+
+  initialssheetEl.reset();
+
+  var HS = {
+    initials: initials,
+    score: score
+  }
+
+  Highscore.push(HS);
+  Highscore.sort((a, b) => {return b.score-a.score});
+
+  while(highscoresEl.firstChild) {
+    highscoresEl.removeChild(highscoresEl.firstChild)
+  }
+  for (var i = 0; i < Highscore.length; i++) {
+    var hsEl = document.createElement("li");
+    hsEl.className = "hiscore";
+    hsEl.innerHTML = Highscore[i].initials + " - " + Highscore[i].score;
+    highscoresEl.appendChild(hsEl);
+  }
+
+  keepHS();
+  showScore();
+
+}
+
+var keepHS = function() {
+  localStorage.setItem("Highscore", JSON.stringify(Highscore))
+}
+
+var renderHS = function () {
+  var renderedHS = localStorage.getItem("Highscore")
+  if (!renderedHS) {
+    return false;
+  }
+
+  renderedHS = JSON.parse(renderedHS);
+  renderedHS.sort((a, b) => {return b.score-a.score})
+
+  for (var i = 0; i < renderedHS.length; i++) {
+    var hsEl = document.createElement("li");
+    hsEl.className = "hiscore";
+    hsEl.innerText = renderedHS[i].initials + " - " + renderedHS;
+    highscoresEl.appendChild(hsEl);
+
+    Highscore.push(renderedHS[i]);
+
+  }
+}
+
+var showHS = function() {
+  highscore1El.classList.remove("hide");
+  highscore1El.classList.add("show");
+  gameover = "true"
+
+  if (endholderEl.className = "show") {
+    endholderEl.classList.remove("show");
+    endholderEl.classList.add("hide");
+  }
+  if (starterEl.className = "show") {
+    starterEl.classList.remove("show");
+    starterEl.classList.add("hide");
+  }
+  if (questionholderEl.className = "show") {
+    questionholderEl.classList.remove("show");
+    questionholderEl.classList.add("hide");
+  }
+}
+
+var eraseScore = function () {
+  Highscore = [];
+
+  while (highscoresEl.firstChild) {
+    highscoresEl.removeChild(highscoresEl.firstChild);
+  }
+
+  localStorage.clear(Highscore);
+}
+renderHS()
+// This is the buttons allowing a function of whats asked when clicked
+startbtnEl.addEventListener("click", beginQuiz)
+highscoresEl.addEventListener("click", showHS)
+backbtnEl.addEventListener("click", displayBeginningPage)
+clearscoresbtnEl.addEventListener("click", eraseScore)
+initialssheetEl.addEventListener("submit", makeScores)
