@@ -82,3 +82,37 @@ var ereseAnswer = function() {
     answerbtnEl.removeChild(answerbtnEl.firstChild)
   };
 };
+// This function should confirm whether the answer is correct or not.
+var answerConfirm = function(event) {
+  var pickedanswer = event.target
+  if (arrayShuffledQuestions[QuestionCatalog].a === pickedanswer.innerText){
+    answerCorrect()
+    score = score + 5
+  }
+
+  else {
+    answerIncorrect()
+    timeleft = timeleft - 2;
+  };
+  
+  var revealQuestion = function(index) {
+    questionEl.innerText = index.question
+    for (var i = 0; i < index.choices.length; i++) {
+      var answerbtn2 = document.createElement("button")
+      answerbtn2.innerText = index.choices[i].choice
+      answerbtn2.classList.add("button")
+      answerbtn2.classList.add("answerbtn")
+      answerbtn2.addEventListener("click", answerConfirm)
+      answerbtnEl.appendChild(answerbtn2)
+    }
+  };
+
+  QuestionCatalog++
+  if (arrayShuffledQuestions.length > QuestionCatalog + 1) {
+    putQuestion()
+  }
+  else {
+    gameover = "true";
+    showScore();
+  }
+}
