@@ -8,6 +8,6 @@
 - I added an array to allow my questions to be shuffled when starting the quiz.
 - I added eventListeners allowing a single click to take a user to the next step.
 ### Screenshot
- 
+![This is the screenshot of the webpage](./Quiz-on-Coding/assets/images.png)
 #### URL
 https://mhkhalil1.github.io/Quiz-on-Coding/
