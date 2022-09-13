@@ -51,3 +51,34 @@ var beginQuiz = function() {
   putQuestion()
   placeTime()
 }
+// This function will display the questions in a randomized order by pulling it from the catalog
+var putQuestion = function() {
+  ereseAnswer()
+  revealQuestion(arrayShuffledQuestions[QuestionCatalog])
+}
+// This function allows the webpage to understand when the quiz is over or not
+var placeTime = function () {
+  timeleft = 20;
+
+var timecheck = setInterval(function() {
+  timeEl.innerText = timeleft;
+  timeleft--
+
+  if (quizover) {
+    clearInterval(timecheck)
+  }
+
+  if (timeleft < 0 ) {
+    showScore()
+    timeEl.innerText = 0
+    clearInterval(timecheck)
+  }
+
+}, 800)
+}
+
+var ereseAnswer = function() {
+  while (answerbtnEl.firstChild) {
+    answerbtnEl.removeChild(answerbtnEl.firstChild)
+  };
+};
